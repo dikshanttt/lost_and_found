@@ -3,7 +3,7 @@
  * CivicFind – Browse / Directory Registry
  */
 $current_page = 'browse';
-$page_title   = 'Directory Registry – CivicFind';
+$page_title   = 'Browse Items – CivicFind';
 
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
@@ -87,15 +87,15 @@ function qs(array $overrides = []): string {
         <!-- Header -->
         <div class="directory-header">
             <div>
-                <h1>Directory Registry</h1>
-                <p class="subtitle"><?= $total ?> matches found under municipal custody</p>
+                <h1>Browse Items</h1>
+                <p class="subtitle"><?= $total ?> items found</p>
             </div>
             <div class="directory-search">
                 <form method="get" style="display:flex;gap:8px">
                     <?php foreach ($_GET as $k => $v): if ($k !== 'keyword'): ?>
                         <input type="hidden" name="<?= e($k) ?>" value="<?= e($v) ?>">
                     <?php endif; endforeach; ?>
-                    <input type="text" name="keyword" placeholder="Refine search..." value="<?= e($keyword) ?>">
+                    <input type="text" name="keyword" placeholder="Search items..." value="<?= e($keyword) ?>">
                     <button class="btn btn-outline btn-sm" type="submit">Search</button>
                 </form>
             </div>
@@ -119,7 +119,7 @@ function qs(array $overrides = []): string {
         ?>
         <?php if ($activeFilters): ?>
         <div class="active-filters">
-            <span style="font-size:13px;font-weight:600;color:var(--slate-500);padding:5px 0;">Active Filters:</span>
+            <span style="font-size:13px;font-weight:600;color:var(--slate-500);padding:5px 0;">Filters:</span>
             <?php foreach ($activeFilters as $af): ?>
                 <span class="filter-chip">
                     <?= e($af['label']) ?>
@@ -132,17 +132,17 @@ function qs(array $overrides = []): string {
         <div class="directory-layout">
             <!-- Sidebar -->
             <aside class="filter-sidebar">
-                <h3>Filter Criteria <a href="/browse.php">Clear</a></h3>
+                <h3>Filters <a href="/browse.php">Clear</a></h3>
                 <form method="get" id="filterForm">
                     <?php if ($keyword !== ''): ?>
                         <input type="hidden" name="keyword" value="<?= e($keyword) ?>">
                     <?php endif; ?>
 
                     <div class="filter-group">
-                        <div class="filter-group-label">Registry Status</div>
+                        <div class="filter-group-label">Item Type</div>
                         <label><input type="radio" name="type" value="" <?= $type === '' ? 'checked' : '' ?> onchange="this.form.submit()"> All Items</label>
-                        <label><input type="radio" name="type" value="found" <?= $type === 'found' ? 'checked' : '' ?> onchange="this.form.submit()"> Found (by citizens)</label>
-                        <label><input type="radio" name="type" value="lost" <?= $type === 'lost' ? 'checked' : '' ?> onchange="this.form.submit()"> Lost Reports</label>
+                        <label><input type="radio" name="type" value="found" <?= $type === 'found' ? 'checked' : '' ?> onchange="this.form.submit()"> Found items</label>
+                        <label><input type="radio" name="type" value="lost" <?= $type === 'lost' ? 'checked' : '' ?> onchange="this.form.submit()"> Lost items</label>
                     </div>
 
                     <div class="filter-group">
@@ -153,12 +153,12 @@ function qs(array $overrides = []): string {
                     </div>
 
                     <div class="filter-group">
-                        <div class="filter-group-label">Location / Zip-Code</div>
-                        <input type="text" name="location" value="<?= e($location) ?>" placeholder="📍 Enter location" onchange="this.form.submit()">
+                        <div class="filter-group-label">Location</div>
+                        <input type="text" name="location" value="<?= e($location) ?>" placeholder="Enter a location" onchange="this.form.submit()">
                     </div>
 
                     <div class="filter-group">
-                        <div class="filter-group-label">Date Window</div>
+                        <div class="filter-group-label">Added</div>
                         <select name="date_range" onchange="this.form.submit()">
                             <option value="">All Time</option>
                             <option value="1" <?= $dateRange === '1' ? 'selected' : '' ?>>Last 24 hours</option>
@@ -175,11 +175,11 @@ function qs(array $overrides = []): string {
                 <?php if (empty($items)): ?>
                     <div class="empty-state" style="padding: 48px 24px; background: var(--white); border: 1px dashed var(--slate-300); border-radius: var(--radius-lg); text-align: center;">
                         <div style="font-size: 40px; margin-bottom: 12px;">🔍</div>
-                        <h3 style="font-size: 20px; font-weight: 700; color: var(--navy-800); margin-bottom: 8px;">No items found in the registry</h3>
-                        <p style="color: var(--slate-500); margin-bottom: 20px;">No records match your active search or the database is currently clear. Would you like to file a new report?</p>
+                        <h3 style="font-size: 20px; font-weight: 700; color: var(--navy-800); margin-bottom: 8px;">No items found</h3>
+                        <p style="color: var(--slate-500); margin-bottom: 20px;">Try changing your search or clearing the filters.</p>
                         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                             <?php if (!empty($activeFilters)): ?>
-                                <a href="/browse.php" class="btn btn-outline">Clear All Filters</a>
+                                <a href="/browse.php" class="btn btn-outline">Clear filters</a>
                             <?php endif; ?>
                             <a href="/user/report-item.php" class="btn btn-primary">+ Report an Item</a>
                         </div>

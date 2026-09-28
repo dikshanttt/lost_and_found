@@ -3,7 +3,7 @@
  * CivicFind – Landing Page (index.php)
  */
 $current_page = 'home';
-$page_title   = 'CivicFind – Reconnecting Lost Items';
+$page_title   = 'CivicFind – Lost and Found';
 
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
@@ -34,20 +34,20 @@ $recent = $db->query("
     <div class="container">
         <div class="hero-grid">
             <div>
-                <span class="hero-badge">OFFICIAL MUNICIPAL DATABASE</span>
-                <h1>Reconnecting lost items with their rightful owners</h1>
-                <p>Welcome to the official, secure digital ledger for lost property. Fast verification, strict data privacy, and a compassionate civic network working to bring your belongings back home.</p>
+                <span class="hero-badge">LOST AND FOUND</span>
+                <h1>Looking for something you lost?</h1>
+                <p>Search the reports on this site or add a report for something you lost or found.</p>
 
                 <form class="hero-search" action="/browse.php" method="get">
                     <div class="search-input">
                         <span class="search-icon">🔍</span>
-                        <input type="text" name="keyword" placeholder="What did you lose? (e.g., iPhone 15, key ring)">
+                        <input type="text" name="keyword" placeholder="Search by item name or details">
                     </div>
                     <div class="search-input">
                         <span class="search-icon">📍</span>
                         <input type="text" name="location" placeholder="Location">
                     </div>
-                    <button type="submit" class="btn btn-blue">Search Registry</button>
+                    <button type="submit" class="btn btn-blue">Search Items</button>
                 </form>
             </div>
             <div class="hero-illustration">
@@ -63,7 +63,7 @@ $recent = $db->query("
         <div class="section-header">
             <div>
                 <h2>Browse by Category</h2>
-                <p>Select a registry group to accelerate your recovery or safe return process</p>
+                <p>Choose a category to narrow your search.</p>
             </div>
             <a href="/browse.php" class="btn btn-outline btn-sm">View All Categories</a>
         </div>
@@ -84,8 +84,8 @@ $recent = $db->query("
     <div class="container">
         <div class="section-header">
             <div>
-                <h2>Recently Registered Items</h2>
-                <p>Updates are automatically validated by local transit and community officers</p>
+                <h2>Recent Reports</h2>
+                <p>Items most recently added to the site.</p>
             </div>
             <a href="/browse.php" class="btn btn-outline btn-sm">Browse Live Directory</a>
         </div>
@@ -93,8 +93,8 @@ $recent = $db->query("
             <?php if (empty($recent)): ?>
                 <div class="empty-state" style="grid-column: 1 / -1; padding: 48px 24px; background: var(--white); border: 1px dashed var(--slate-300); border-radius: var(--radius-lg);">
                     <div style="font-size: 40px; margin-bottom: 12px;">📋</div>
-                    <h3 style="font-size: 20px; font-weight: 700; color: var(--navy-800); margin-bottom: 8px;">No items registered in the database yet</h3>
-                    <p style="color: var(--slate-500); margin-bottom: 20px;">The municipal registry is ready for real citizen reports. Have you found something or lost a valuable item?</p>
+                    <h3 style="font-size: 20px; font-weight: 700; color: var(--navy-800); margin-bottom: 8px;">No reports yet</h3>
+                    <p style="color: var(--slate-500); margin-bottom: 20px;">When someone adds a report, it will show up here.</p>
                     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                         <a href="/user/report-item.php?type=lost" class="btn btn-primary">Report Lost Item</a>
                         <a href="/user/report-item.php?type=found" class="btn btn-teal">Report Found Item</a>
@@ -139,18 +139,18 @@ $recent = $db->query("
         <div class="steps-grid">
             <div class="step-card">
                 <div class="step-number">01</div>
-                <h3>Record Report</h3>
-                <p>Submit details with precise location, timestamps, photo proofs, and private security questions.</p>
+                <h3>Add a Report</h3>
+                <p>Enter the item details, date, and location. You can add a photo too.</p>
             </div>
             <div class="step-card">
                 <div class="step-number">02</div>
-                <h3>Matches Suggested</h3>
-                <p>Our system immediately parses category descriptors and locations to suggest high-probability matches.</p>
+                <h3>Search Reports</h3>
+                <p>Use the search and filters to look through the reports.</p>
             </div>
             <div class="step-card">
                 <div class="step-number">03</div>
-                <h3>Secure Claiming</h3>
-                <p>Meet at a verified city pick-up terminal or verify ownership through verified secret descriptions.</p>
+                <h3>Make a Claim</h3>
+                <p>If you see a found item that may be yours, send a claim for an administrator to review.</p>
             </div>
         </div>
     </div>
@@ -162,9 +162,9 @@ $recent = $db->query("
         <div class="cta-banner">
             <div>
                 <h2>Have you found something of value?</h2>
-                <p>Be a helpful citizen. Returning an item takes less than 2 minutes and automatically notifies matching search requests.</p>
+                <p>If you found an item, add a report so its owner can search for it.</p>
             </div>
-            <a href="/user/report-item.php?type=found" class="btn btn-outline-white btn-lg">Report Found Item Now</a>
+            <a href="/user/report-item.php?type=found" class="btn btn-outline-white btn-lg">Report a Found Item</a>
         </div>
     </div>
 </section>

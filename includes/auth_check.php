@@ -87,7 +87,7 @@ function require_login(): void {
 function require_admin(): void {
     require_login();
     if (!is_admin()) {
-        set_flash('error', 'Access denied. Administrators only.');
+        set_flash('error', 'This page is for admins only.');
         header('Location: /index.php');
         exit;
     }
