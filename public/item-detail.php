@@ -10,7 +10,7 @@ $db = get_db();
 $id = (int)($_GET['id'] ?? 0);
 
 if ($id <= 0) {
-    header('Location: /browse.php');
+    header('Location: ' . app_url('/browse.php'));
     exit;
 }
 
@@ -26,7 +26,7 @@ $item = $stmt->fetch();
 
 if (!$item) {
     set_flash('error', 'Item not found.');
-    header('Location: /browse.php');
+    header('Location: ' . app_url('/browse.php'));
     exit;
 }
 
@@ -59,14 +59,14 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="container" style="padding: 24px 0;">
     <p style="margin-bottom: 20px;">
-        <a href="/browse.php" class="text-muted">&larr; Back to items</a>
+        <a href="<?= e(app_url('/browse.php')) ?>" class="text-muted">&larr; Back to items</a>
     </p>
 
     <div class="detail-layout">
         <!-- Item Photo -->
         <div class="detail-image">
             <?php if (!empty($item['image_path'])): ?>
-                <img src="/<?= e($item['image_path']) ?>" alt="<?= e($item['title']) ?>" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+                <img src="<?= e(app_url('/' . $item['image_path'])) ?>" alt="<?= e($item['title']) ?>" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
             <?php else: ?>
                 <div class="img-placeholder" style="border-radius: var(--radius-lg); height: 360px; font-size: 72px;">
                     <?= category_icon($item['category_name']) ?>
@@ -109,8 +109,8 @@ require_once __DIR__ . '/../includes/header.php';
             <!-- Action Controls -->
             <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
                 <?php if ($is_owner || is_admin()): ?>
-                    <a href="/user/edit-item.php?id=<?= $item['id'] ?>" class="btn btn-outline">✏️ Edit Report</a>
-                    <form action="/user/delete-item.php" method="post" onsubmit="return confirm('Are you sure you want to remove this report?');" style="display:inline;">
+                    <a href="<?= e(app_url('/user/edit-item.php?id=' . (int)$item['id'])) ?>" class="btn btn-outline">✏️ Edit Report</a>
+                    <form action="<?= e(app_url('/user/delete-item.php')) ?>" method="post" onsubmit="return confirm('Are you sure you want to remove this report?');" style="display:inline;">
                         <?= csrf_token() ?>
                         <input type="hidden" name="id" value="<?= $item['id'] ?>">
                         <button type="submit" class="btn btn-danger">🗑️ Delete Report</button>
@@ -126,7 +126,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 Your claim is currently: <?= status_badge($existing_claim['status']) ?>
                             </div>
                         <?php elseif (!is_logged_in()): ?>
-                            <a href="/auth/login.php" class="btn btn-teal btn-lg">Sign In to Claim This Item</a>
+                            <a href="<?= e(app_url('/auth/login.php')) ?>" class="btn btn-teal btn-lg">Sign In to Claim This Item</a>
                         <?php else: ?>
                             <button class="btn btn-teal btn-lg" data-modal="claimModal">✨ Claim This Item</button>
                         <?php endif; ?>
@@ -136,7 +136,7 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a href="/user/report-item.php?type=found" class="btn btn-blue btn-lg">Report a found item</a>
+                    <a href="<?= e(app_url('/user/report-item.php?type=found')) ?>" class="btn btn-blue btn-lg">Report a found item</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -150,17 +150,17 @@ require_once __DIR__ . '/../includes/header.php';
                 <h2>More in <?= e($item['category_name']) ?></h2>
                 <p>Other active reports in this category.</p>
             </div>
-            <a href="/browse.php?category=<?= $item['category_id'] ?>" class="btn btn-outline btn-sm">View Category</a>
+            <a href="<?= e(app_url('/browse.php?category=' . (int)$item['category_id'])) ?>" class="btn btn-outline btn-sm">View Category</a>
         </div>
         <div class="items-grid-3">
             <?php foreach ($related as $rel): ?>
             <div class="item-card">
                 <?php if ($rel['image_path']): ?>
-                    <a href="/item-detail.php?id=<?= $rel['id'] ?>">
-                        <img src="/<?= e($rel['image_path']) ?>" alt="<?= e($rel['title']) ?>" class="item-card-img">
+                    <a href="<?= e(app_url('/item-detail.php?id=' . (int)$rel['id'])) ?>">
+                        <img src="<?= e(app_url('/' . $rel['image_path'])) ?>" alt="<?= e($rel['title']) ?>" class="item-card-img">
                     </a>
                 <?php else: ?>
-                    <a href="/item-detail.php?id=<?= $rel['id'] ?>"><div class="img-placeholder"><?= category_icon($rel['category_name']) ?></div></a>
+                    <a href="<?= e(app_url('/item-detail.php?id=' . (int)$rel['id'])) ?>"><div class="img-placeholder"><?= category_icon($rel['category_name']) ?></div></a>
                 <?php endif; ?>
                 <div class="item-card-body">
                     <div class="item-card-meta">
@@ -168,12 +168,12 @@ require_once __DIR__ . '/../includes/header.php';
                         <?= type_badge($rel['type']) ?>
                     </div>
                     <div class="item-card-title">
-                        <a href="/item-detail.php?id=<?= $rel['id'] ?>"><?= e($rel['title']) ?></a>
+                        <a href="<?= e(app_url('/item-detail.php?id=' . (int)$rel['id'])) ?>"><?= e($rel['title']) ?></a>
                     </div>
                     <div class="item-card-info">📍 <?= e($rel['location']) ?></div>
                     <div class="item-card-info">📅 <?= time_ago($rel['created_at']) ?></div>
                     <div class="item-card-actions">
-                        <a href="/item-detail.php?id=<?= $rel['id'] ?>" class="btn btn-outline btn-block">View Details</a>
+                        <a href="<?= e(app_url('/item-detail.php?id=' . (int)$rel['id'])) ?>" class="btn btn-outline btn-block">View Details</a>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@ require_once __DIR__ . '/../includes/header.php';
             <h2>Submit a claim: <?= e($item['title']) ?></h2>
             <button class="modal-close" type="button">&times;</button>
         </div>
-        <form action="/user/submit-claim.php" method="post">
+        <form action="<?= e(app_url('/user/submit-claim.php')) ?>" method="post">
             <?= csrf_token() ?>
             <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
             <div class="modal-body">

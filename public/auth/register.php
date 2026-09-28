@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth_check.php';
 
 if (is_logged_in()) {
-    header('Location: /');
+    header('Location: ' . app_url('/'));
     exit;
 }
 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
 
             set_flash('success', 'Your account has been created successfully!');
-            header('Location: /browse.php');
+            header('Location: ' . app_url('/browse.php'));
             exit;
         }
     }
@@ -81,7 +81,7 @@ require_once __DIR__ . '/../../includes/header.php';
             </div>
         <?php endif; ?>
 
-        <form action="/auth/register.php" method="post">
+        <form action="<?= e(app_url('/auth/register.php')) ?>" method="post">
             <?= csrf_token() ?>
             <div class="form-group">
                 <label for="full_name">Full Name *</label>
@@ -109,7 +109,7 @@ require_once __DIR__ . '/../../includes/header.php';
         </form>
 
         <p style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--slate-500);">
-            Already have an account? <a href="/auth/login.php">Sign in</a>
+            Already have an account? <a href="<?= e(app_url('/auth/login.php')) ?>">Sign in</a>
         </p>
     </div>
 </div>

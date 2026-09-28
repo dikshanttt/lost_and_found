@@ -63,7 +63,7 @@ function logout_user(): void {
 function require_login(): void {
     if (!is_logged_in()) {
         set_flash('error', 'Please sign in to continue.');
-        header('Location: /auth/login.php');
+        header('Location: ' . app_url('/auth/login.php'));
         exit;
     }
 
@@ -75,7 +75,7 @@ function require_login(): void {
         logout_user();
         session_start();
         set_flash('error', 'Your session has ended. Please sign in again.');
-        header('Location: /auth/login.php');
+        header('Location: ' . app_url('/auth/login.php'));
         exit;
     }
 
@@ -88,7 +88,7 @@ function require_admin(): void {
     require_login();
     if (!is_admin()) {
         set_flash('error', 'This page is for admins only.');
-        header('Location: /index.php');
+        header('Location: ' . app_url('/index.php'));
         exit;
     }
 }

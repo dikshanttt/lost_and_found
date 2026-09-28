@@ -49,9 +49,9 @@ require_once __DIR__ . '/../../includes/header.php';
             <p style="color: var(--slate-500); margin-top: 4px;">Review claims, item reports, and user accounts.</p>
         </div>
         <div style="display: flex; gap: 10px;">
-            <a href="/admin/claims.php" class="btn btn-teal">Claims to review (<?= $pending_claims ?>)</a>
-            <a href="/admin/items.php" class="btn btn-outline">All Items</a>
-            <a href="/admin/users.php" class="btn btn-outline">Users</a>
+            <a href="<?= e(app_url('/admin/claims.php')) ?>" class="btn btn-teal">Claims to review (<?= $pending_claims ?>)</a>
+            <a href="<?= e(app_url('/admin/items.php')) ?>" class="btn btn-outline">All Items</a>
+            <a href="<?= e(app_url('/admin/users.php')) ?>" class="btn btn-outline">Users</a>
         </div>
     </div>
 
@@ -83,7 +83,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <div style="margin-top: 40px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-800);">Claims to review</h2>
-            <a href="/admin/claims.php" class="btn btn-outline btn-sm">View All Claims</a>
+            <a href="<?= e(app_url('/admin/claims.php')) ?>" class="btn btn-outline btn-sm">View All Claims</a>
         </div>
 
         <?php if (empty($pending_list)): ?>
@@ -108,7 +108,7 @@ require_once __DIR__ . '/../../includes/header.php';
                         <tr>
                             <td>#<?= $cl['id'] ?></td>
                             <td>
-                                <a href="/item-detail.php?id=<?= $cl['item_id'] ?>" style="font-weight: 600;">
+                                <a href="<?= e(app_url('/item-detail.php?id=' . (int)$cl['item_id'])) ?>" style="font-weight: 600;">
                                     <?= e($cl['item_title']) ?>
                                 </a>
                             </td>
@@ -116,7 +116,7 @@ require_once __DIR__ . '/../../includes/header.php';
                             <td><?= e(truncate_text($cl['claim_message'], 60)) ?></td>
                             <td><?= time_ago($cl['created_at']) ?></td>
                             <td>
-                                <a href="/admin/claims.php?review=<?= $cl['id'] ?>" class="btn btn-teal btn-sm">Review</a>
+                                <a href="<?= e(app_url('/admin/claims.php?review=' . (int)$cl['id'])) ?>" class="btn btn-teal btn-sm">Review</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -130,7 +130,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <div style="margin-top: 40px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-800);">Latest reports</h2>
-            <a href="/admin/items.php" class="btn btn-outline btn-sm">Manage All Items</a>
+            <a href="<?= e(app_url('/admin/items.php')) ?>" class="btn btn-outline btn-sm">Manage All Items</a>
         </div>
 
         <div class="table-wrapper">
@@ -150,7 +150,7 @@ require_once __DIR__ . '/../../includes/header.php';
                     <?php foreach ($recent_items as $item): ?>
                     <tr>
                         <td>
-                            <a href="/item-detail.php?id=<?= $item['id'] ?>" style="font-weight: 600;">
+                            <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>" style="font-weight: 600;">
                                 <?= e($item['title']) ?>
                             </a>
                         </td>
@@ -160,7 +160,7 @@ require_once __DIR__ . '/../../includes/header.php';
                         <td><?= e($item['location']) ?></td>
                         <td><?= status_badge($item['status']) ?></td>
                         <td>
-                            <a href="/user/edit-item.php?id=<?= $item['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
+                            <a href="<?= e(app_url('/user/edit-item.php?id=' . (int)$item['id'])) ?>" class="btn btn-outline btn-sm">Edit</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

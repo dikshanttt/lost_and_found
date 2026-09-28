@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
         $u->execute(['st' => $new_status, 'id' => $item_id]);
         set_flash('success', "Item #$item_id status changed to $new_status.");
     }
-    header('Location: /admin/items.php');
+    header('Location: ' . app_url('/admin/items.php'));
     exit;
 }
 
@@ -45,8 +45,8 @@ require_once __DIR__ . '/../../includes/header.php';
             <p style="color: var(--slate-500); margin-top: 4px;">View reports and change their status.</p>
         </div>
         <div style="display: flex; gap: 8px;">
-            <a href="/admin/dashboard.php" class="btn btn-outline">&larr; Dashboard</a>
-            <a href="/user/report-item.php" class="btn btn-primary">+ Add Report</a>
+            <a href="<?= e(app_url('/admin/dashboard.php')) ?>" class="btn btn-outline">&larr; Dashboard</a>
+            <a href="<?= e(app_url('/user/report-item.php')) ?>" class="btn btn-primary">+ Add Report</a>
         </div>
     </div>
 
@@ -68,7 +68,7 @@ require_once __DIR__ . '/../../includes/header.php';
                 <?php foreach ($items as $it): ?>
                 <tr>
                     <td>
-                        <a href="/item-detail.php?id=<?= $it['id'] ?>" style="font-weight: 600;">
+                        <a href="<?= e(app_url('/item-detail.php?id=' . (int)$it['id'])) ?>" style="font-weight: 600;">
                             <?= e($it['title']) ?>
                         </a>
                         <div style="font-size: 12px; color: var(--slate-400);">ID #<?= $it['id'] ?></div>
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../../includes/header.php';
                     </td>
                     <td><?= status_badge($it['status']) ?></td>
                     <td>
-                        <form action="/admin/items.php" method="post" style="display: flex; gap: 6px;">
+                        <form action="<?= e(app_url('/admin/items.php')) ?>" method="post" style="display: flex; gap: 6px;">
                             <?= csrf_token() ?>
                             <input type="hidden" name="update_status" value="1">
                             <input type="hidden" name="item_id" value="<?= $it['id'] ?>">
@@ -99,8 +99,8 @@ require_once __DIR__ . '/../../includes/header.php';
                     </td>
                     <td>
                         <div class="actions">
-                            <a href="/user/edit-item.php?id=<?= $it['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
-                            <form action="/user/delete-item.php" method="post" onsubmit="return confirm('Delete this report?');">
+                            <a href="<?= e(app_url('/user/edit-item.php?id=' . (int)$it['id'])) ?>" class="btn btn-outline btn-sm">Edit</a>
+                            <form action="<?= e(app_url('/user/delete-item.php')) ?>" method="post" onsubmit="return confirm('Delete this report?');">
                                 <?= csrf_token() ?>
                                 <input type="hidden" name="id" value="<?= $it['id'] ?>">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>

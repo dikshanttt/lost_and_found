@@ -132,7 +132,7 @@ function qs(array $overrides = []): string {
         <div class="directory-layout">
             <!-- Sidebar -->
             <aside class="filter-sidebar">
-                <h3>Filters <a href="/browse.php">Clear</a></h3>
+                <h3>Filters <a href="<?= e(app_url('/browse.php')) ?>">Clear</a></h3>
                 <form method="get" id="filterForm">
                     <?php if ($keyword !== ''): ?>
                         <input type="hidden" name="keyword" value="<?= e($keyword) ?>">
@@ -179,9 +179,9 @@ function qs(array $overrides = []): string {
                         <p style="color: var(--slate-500); margin-bottom: 20px;">Try changing your search or clearing the filters.</p>
                         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                             <?php if (!empty($activeFilters)): ?>
-                                <a href="/browse.php" class="btn btn-outline">Clear filters</a>
+                                <a href="<?= e(app_url('/browse.php')) ?>" class="btn btn-outline">Clear filters</a>
                             <?php endif; ?>
-                            <a href="/user/report-item.php" class="btn btn-primary">+ Report an Item</a>
+                            <a href="<?= e(app_url('/user/report-item.php')) ?>" class="btn btn-primary">+ Report an Item</a>
                         </div>
                     </div>
                 <?php else: ?>
@@ -189,11 +189,11 @@ function qs(array $overrides = []): string {
                         <?php foreach ($items as $item): ?>
                         <div class="item-card">
                             <?php if ($item['image_path']): ?>
-                                <a href="/item-detail.php?id=<?= $item['id'] ?>">
-                                    <img src="/<?= e($item['image_path']) ?>" alt="<?= e($item['title']) ?>" class="item-card-img">
+                                <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>">
+                                    <img src="<?= e(app_url('/' . $item['image_path'])) ?>" alt="<?= e($item['title']) ?>" class="item-card-img">
                                 </a>
                             <?php else: ?>
-                                <a href="/item-detail.php?id=<?= $item['id'] ?>"><div class="img-placeholder">📦</div></a>
+                                <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>"><div class="img-placeholder">📦</div></a>
                             <?php endif; ?>
                             <div class="item-card-body">
                                 <div class="item-card-meta">
@@ -201,15 +201,15 @@ function qs(array $overrides = []): string {
                                     <?= type_badge($item['type']) ?>
                                 </div>
                                 <div class="item-card-title">
-                                    <a href="/item-detail.php?id=<?= $item['id'] ?>"><?= e($item['title']) ?></a>
+                                    <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>"><?= e($item['title']) ?></a>
                                 </div>
                                 <div class="item-card-info">📍 <?= e($item['location']) ?></div>
                                 <div class="item-card-info">📅 <?= time_ago($item['created_at']) ?></div>
                                 <div class="item-card-actions">
                                     <?php if ($item['type'] === 'found'): ?>
-                                        <a href="/item-detail.php?id=<?= $item['id'] ?>" class="btn btn-teal btn-block">Claim Item</a>
+                                        <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>" class="btn btn-teal btn-block">Claim Item</a>
                                     <?php else: ?>
-                                        <a href="/item-detail.php?id=<?= $item['id'] ?>" class="btn btn-outline btn-block">Report Match</a>
+                                        <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>" class="btn btn-outline btn-block">Report Match</a>
                                     <?php endif; ?>
                                 </div>
                             </div>

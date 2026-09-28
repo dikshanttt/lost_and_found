@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth_check.php';
 
 if (is_logged_in()) {
-    header('Location: /');
+    header('Location: ' . app_url('/'));
     exit;
 }
 
@@ -77,7 +77,7 @@ require_once __DIR__ . '/../../includes/header.php';
             </div>
         <?php endif; ?>
 
-        <form action="/auth/login.php" method="post">
+        <form action="<?= e(app_url('/auth/login.php')) ?>" method="post">
             <?= csrf_token() ?>
             <div class="form-group">
                 <label for="email">Email Address</label>
@@ -95,7 +95,7 @@ require_once __DIR__ . '/../../includes/header.php';
         </form>
 
         <p style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--slate-500);">
-            New here? <a href="/auth/register.php">Create an account</a>
+            New here? <a href="<?= e(app_url('/auth/register.php')) ?>">Create an account</a>
         </p>
 
         <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--slate-200); font-size: 12px; color: var(--slate-400); text-align: center;">

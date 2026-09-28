@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 email_user($adminEmail, 'Administrator', 'New item report', 'A new item report was submitted', 'A new ' . strtoupper($type) . ' report, "' . $title . '", was submitted. Sign in to the admin dashboard to review it.');
             }
             set_flash('success', 'Your ' . strtoupper($type) . ' report was added.');
-            header("Location: /item-detail.php?id=$new_item_id");
+            header('Location: ' . app_url('/item-detail.php?id=' . $new_item_id));
             exit;
         }
     }
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <?php endif; ?>
 
     <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-sm);">
-        <form action="/user/report-item.php" method="post" enctype="multipart/form-data">
+        <form action="<?= e(app_url('/user/report-item.php')) ?>" method="post" enctype="multipart/form-data">
             <?= csrf_token() ?>
 
             <!-- Type Selector -->
@@ -155,7 +155,7 @@ require_once __DIR__ . '/../../includes/header.php';
             </div>
 
             <div style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
-                <a href="/browse.php" class="btn btn-outline">Cancel</a>
+                <a href="<?= e(app_url('/browse.php')) ?>" class="btn btn-outline">Cancel</a>
                 <button type="submit" class="btn btn-primary btn-lg">Add Report</button>
             </div>
         </form>

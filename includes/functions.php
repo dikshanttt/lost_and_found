@@ -9,6 +9,39 @@ function e(?string $str): string {
     return htmlspecialchars($str ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+/* ── Internal URL paths ────────────────────────────────── */
+function app_base_path(): string {
+    static $basePath = null;
+    if ($basePath !== null) return $basePath;
+
+    $configured = trim(env_value('APP_BASE_PATH'));
+    if ($configured !== '') {
+        $basePath = '/' . trim($configured, '/');
+        return $basePath === '/' ? '' : $basePath;
+    }
+
+    $script = str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? '/'));
+    $directory = rtrim(str_replace('\\', '/', dirname($script)), '/');
+    foreach (['/admin', '/auth', '/user'] as $section) {
+        if ($directory === $section) {
+            $directory = '';
+            break;
+        }
+        if (str_ends_with($directory, $section)) {
+            $directory = substr($directory, 0, -strlen($section));
+            break;
+        }
+    }
+
+    $basePath = ($directory === '' || $directory === '.' || $directory === '/') ? '' : $directory;
+    return $basePath;
+}
+
+function app_url(string $path = '/'): string {
+    $path = '/' . ltrim($path, '/');
+    return app_base_path() . $path;
+}
+
 /* ── CSRF protection ───────────────────────────────────── */
 function csrf_token(): string {
     if (empty($_SESSION['csrf_token'])) {

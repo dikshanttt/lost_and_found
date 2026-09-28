@@ -10,7 +10,7 @@ require_once __DIR__ . '/../../includes/mailer.php';
 require_login();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /browse.php');
+    header('Location: ' . app_url('/browse.php'));
     exit;
 }
 
@@ -23,7 +23,7 @@ $proof_description = trim($_POST['proof_description'] ?? '');
 
 if ($item_id <= 0 || empty($claim_message) || empty($proof_description)) {
     set_flash('error', 'Please fill in both claim fields.');
-    header("Location: /item-detail.php?id=$item_id");
+    header('Location: ' . app_url('/item-detail.php?id=' . $item_id));
     exit;
 }
 
@@ -36,25 +36,25 @@ $item = $stmt->fetch();
 
 if (!$item) {
     set_flash('error', 'Item record not found.');
-    header('Location: /browse.php');
+    header('Location: ' . app_url('/browse.php'));
     exit;
 }
 
 if ($item['type'] !== 'found') {
     set_flash('error', 'You can only claim found items.');
-    header("Location: /item-detail.php?id=$item_id");
+    header('Location: ' . app_url('/item-detail.php?id=' . $item_id));
     exit;
 }
 
 if ($item['status'] !== 'active') {
     set_flash('error', 'This found item is no longer accepting claims.');
-    header("Location: /item-detail.php?id=$item_id");
+    header('Location: ' . app_url('/item-detail.php?id=' . $item_id));
     exit;
 }
 
 if ($item['user_id'] == $user['id']) {
     set_flash('error', 'You cannot claim an item you reported yourself.');
-    header("Location: /item-detail.php?id=$item_id");
+    header('Location: ' . app_url('/item-detail.php?id=' . $item_id));
     exit;
 }
 
@@ -65,7 +65,7 @@ $existing = $chk->fetch();
 
 if ($existing) {
     set_flash('warning', 'You already have an existing claim for this item with status: ' . strtoupper($existing['status']));
-    header("Location: /item-detail.php?id=$item_id");
+    header('Location: ' . app_url('/item-detail.php?id=' . $item_id));
     exit;
 }
 
@@ -88,5 +88,5 @@ if (filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
 }
 
 set_flash('success', 'Your claim was sent for review.');
-header("Location: /user/my-reports.php?tab=claims");
+header('Location: ' . app_url('/user/my-reports.php?tab=claims'));
 exit;

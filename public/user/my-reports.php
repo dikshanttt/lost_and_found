@@ -48,7 +48,7 @@ require_once __DIR__ . '/../../includes/header.php';
             <h1 style="font-size: 28px; font-weight: 700; color: var(--navy-800);">My Reports and Claims</h1>
             <p style="color: var(--slate-500); margin-top: 4px;">View and update your reports, and check your claims.</p>
         </div>
-        <a href="/user/report-item.php" class="btn btn-primary">+ Report Another Item</a>
+        <a href="<?= e(app_url('/user/report-item.php')) ?>" class="btn btn-primary">+ Report Another Item</a>
     </div>
 
     <!-- Tab navigation -->
@@ -67,7 +67,7 @@ require_once __DIR__ . '/../../includes/header.php';
                 <h3>You haven't reported any items yet</h3>
                 <p>Add a report if you lost something or found an item.</p>
                 <div style="margin-top: 16px;">
-                    <a href="/user/report-item.php" class="btn btn-blue">Report Item Now</a>
+                    <a href="<?= e(app_url('/user/report-item.php')) ?>" class="btn btn-blue">Report Item Now</a>
                 </div>
             </div>
         <?php else: ?>
@@ -88,7 +88,7 @@ require_once __DIR__ . '/../../includes/header.php';
                         <?php foreach ($my_items as $item): ?>
                         <tr>
                             <td style="font-weight: 600;">
-                                <a href="/item-detail.php?id=<?= $item['id'] ?>" style="color: var(--navy-800);">
+                                <a href="<?= e(app_url('/item-detail.php?id=' . (int)$item['id'])) ?>" style="color: var(--navy-800);">
                                     <?= e($item['title']) ?>
                                 </a>
                                 <div style="font-size: 12px; color: var(--slate-400); font-weight: normal;">
@@ -111,8 +111,8 @@ require_once __DIR__ . '/../../includes/header.php';
                             </td>
                             <td>
                                 <div class="actions">
-                                    <a href="/user/edit-item.php?id=<?= $item['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
-                                    <form action="/user/delete-item.php" method="post" onsubmit="return confirm('Remove this report?');" style="display:inline;">
+                                    <a href="<?= e(app_url('/user/edit-item.php?id=' . (int)$item['id'])) ?>" class="btn btn-outline btn-sm">Edit</a>
+                                    <form action="<?= e(app_url('/user/delete-item.php')) ?>" method="post" onsubmit="return confirm('Remove this report?');" style="display:inline;">
                                         <?= csrf_token() ?>
                                         <input type="hidden" name="id" value="<?= $item['id'] ?>">
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -133,7 +133,7 @@ require_once __DIR__ . '/../../includes/header.php';
                 <h3>No claims submitted yet</h3>
                 <p>If a found item may be yours, you can submit a claim for review.</p>
                 <div style="margin-top: 16px;">
-                    <a href="/browse.php?type=found" class="btn btn-teal">Browse Found Items</a>
+                    <a href="<?= e(app_url('/browse.php?type=found')) ?>" class="btn btn-teal">Browse Found Items</a>
                 </div>
             </div>
         <?php else: ?>
@@ -153,7 +153,7 @@ require_once __DIR__ . '/../../includes/header.php';
                         <?php foreach ($my_claims as $cl): ?>
                         <tr>
                             <td>
-                                <a href="/item-detail.php?id=<?= $cl['item_id'] ?>" style="font-weight: 600; color: var(--navy-800);">
+                                <a href="<?= e(app_url('/item-detail.php?id=' . (int)$cl['item_id'])) ?>" style="font-weight: 600; color: var(--navy-800);">
                                     <?= e($cl['item_title']) ?>
                                 </a>
                             </td>

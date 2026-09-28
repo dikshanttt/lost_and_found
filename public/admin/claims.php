@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
-    header('Location: /admin/claims.php');
+    header('Location: ' . app_url('/admin/claims.php'));
     exit;
 }
 
@@ -112,15 +112,15 @@ require_once __DIR__ . '/../../includes/header.php';
             <h1 style="font-size: 28px; font-weight: 700; color: var(--navy-800);">Claims</h1>
             <p style="color: var(--slate-500); margin-top: 4px;">Review claim details and approve or reject requests.</p>
         </div>
-        <a href="/admin/dashboard.php" class="btn btn-outline">&larr; Back to Dashboard</a>
+        <a href="<?= e(app_url('/admin/dashboard.php')) ?>" class="btn btn-outline">&larr; Back to Dashboard</a>
     </div>
 
     <!-- Filter chips -->
     <div style="display: flex; gap: 8px; margin-bottom: 24px;">
-        <a href="/admin/claims.php" class="btn btn-sm <?= $status_filter === '' ? 'btn-primary' : 'btn-outline' ?>">All Claims</a>
-        <a href="/admin/claims.php?status=pending" class="btn btn-sm <?= $status_filter === 'pending' ? 'btn-primary' : 'btn-outline' ?>">Pending Only</a>
-        <a href="/admin/claims.php?status=approved" class="btn btn-sm <?= $status_filter === 'approved' ? 'btn-primary' : 'btn-outline' ?>">Approved</a>
-        <a href="/admin/claims.php?status=rejected" class="btn btn-sm <?= $status_filter === 'rejected' ? 'btn-primary' : 'btn-outline' ?>">Rejected</a>
+        <a href="<?= e(app_url('/admin/claims.php')) ?>" class="btn btn-sm <?= $status_filter === '' ? 'btn-primary' : 'btn-outline' ?>">All Claims</a>
+        <a href="<?= e(app_url('/admin/claims.php?status=pending')) ?>" class="btn btn-sm <?= $status_filter === 'pending' ? 'btn-primary' : 'btn-outline' ?>">Pending Only</a>
+        <a href="<?= e(app_url('/admin/claims.php?status=approved')) ?>" class="btn btn-sm <?= $status_filter === 'approved' ? 'btn-primary' : 'btn-outline' ?>">Approved</a>
+        <a href="<?= e(app_url('/admin/claims.php?status=rejected')) ?>" class="btn btn-sm <?= $status_filter === 'rejected' ? 'btn-primary' : 'btn-outline' ?>">Rejected</a>
     </div>
 
     <?php if (empty($list)): ?>
@@ -148,7 +148,7 @@ require_once __DIR__ . '/../../includes/header.php';
                     <tr>
                         <td>#<?= $cl['id'] ?></td>
                         <td>
-                            <a href="/item-detail.php?id=<?= $cl['item_id'] ?>" style="font-weight: 600;">
+                            <a href="<?= e(app_url('/item-detail.php?id=' . (int)$cl['item_id'])) ?>" style="font-weight: 600;">
                                 <?= e($cl['item_title']) ?>
                             </a>
                             <div style="font-size: 12px; color: var(--slate-400);"><?= e($cl['category_name']) ?></div>
@@ -186,7 +186,7 @@ require_once __DIR__ . '/../../includes/header.php';
                                 <h2>Claim Review: #<?= $cl['id'] ?> (<?= e($cl['item_title']) ?>)</h2>
                                 <button class="modal-close" type="button">&times;</button>
                             </div>
-                            <form action="/admin/claims.php" method="post">
+                            <form action="<?= e(app_url('/admin/claims.php')) ?>" method="post">
                                 <?= csrf_token() ?>
                                 <input type="hidden" name="claim_id" value="<?= $cl['id'] ?>">
                                 <div class="modal-body">

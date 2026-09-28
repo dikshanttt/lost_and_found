@@ -9,7 +9,7 @@ Page-based PHP and MySQL project. V1.5 includes account authentication, searchab
 3. Install the PHP dependency with `composer install`.
 4. Run `php config/setup.php` from the project directory. The setup script is intentionally CLI-only and creates the first admin using the environment values.
 5. Remove `ADMIN_PASSWORD` from `.env` after the admin account is created. Keep `.env` private and never commit it.
-6. Set the web server document root to the project's `public/` directory. For PHP's built-in server, run `php -S 127.0.0.1:8000 -t public` from the project root. The private configuration and source folders are intentionally outside the document root.
+6. Set the web server document root to the project's `public/` directory. For PHP's built-in server, run `php -S 127.0.0.1:8000 -t public` from the project root. The private configuration and source folders are intentionally outside the document root. Internal links, redirects, CSS, and JavaScript URLs use a shared helper that detects when the public site is served under a subfolder. If your server uses rewritten routes that prevent detection, set `APP_BASE_PATH` in `.env` to the URL path to the public folder, such as `/LostAndFound/public`.
 
 `SMTP_ENCRYPTION` accepts `tls`, `ssl`, or `none`; use the value and port supplied by your SMTP provider. `MAIL_FROM_ADDRESS` must be an address authorized by that provider. `ADMIN_NOTIFICATION_EMAIL` receives new report and claim notices. Email delivery failures are recorded in the PHP error log and do not interrupt submissions.
 

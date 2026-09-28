@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    header('Location: /admin/users.php');
+    header('Location: ' . app_url('/admin/users.php'));
     exit;
 }
 
@@ -57,7 +57,7 @@ require_once __DIR__ . '/../../includes/header.php';
             <h1 style="font-size: 28px; font-weight: 700; color: var(--navy-800);">Users</h1>
             <p style="color: var(--slate-500); margin-top: 4px;">View accounts and change roles or status.</p>
         </div>
-        <a href="/admin/dashboard.php" class="btn btn-outline">&larr; Back to Dashboard</a>
+        <a href="<?= e(app_url('/admin/dashboard.php')) ?>" class="btn btn-outline">&larr; Back to Dashboard</a>
     </div>
 
     <div class="table-wrapper">
@@ -97,7 +97,7 @@ require_once __DIR__ . '/../../includes/header.php';
                     <td>
                         <?php if ($u['id'] != $admin['id']): ?>
                             <div class="actions">
-                                <form action="/admin/users.php" method="post" style="display:inline;">
+                                <form action="<?= e(app_url('/admin/users.php')) ?>" method="post" style="display:inline;">
                                     <?= csrf_token() ?>
                                     <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                                     <input type="hidden" name="action" value="toggle_status">
@@ -107,7 +107,7 @@ require_once __DIR__ . '/../../includes/header.php';
                                     </button>
                                 </form>
 
-                                <form action="/admin/users.php" method="post" style="display:inline;">
+                                <form action="<?= e(app_url('/admin/users.php')) ?>" method="post" style="display:inline;">
                                     <?= csrf_token() ?>
                                     <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                                     <input type="hidden" name="action" value="toggle_role">

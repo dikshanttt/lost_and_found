@@ -13,7 +13,7 @@ $user = current_user();
 $id = (int)($_GET['id'] ?? 0);
 
 if ($id <= 0) {
-    header('Location: /user/my-reports.php');
+    header('Location: ' . app_url('/user/my-reports.php'));
     exit;
 }
 
@@ -23,14 +23,14 @@ $item = $stmt->fetch();
 
 if (!$item) {
     set_flash('error', 'Item report not found.');
-    header('Location: /user/my-reports.php');
+    header('Location: ' . app_url('/user/my-reports.php'));
     exit;
 }
 
 // Ownership check
 if ($item['user_id'] != $user['id'] && !is_admin()) {
     set_flash('error', 'You do not have permission to edit this report.');
-    header('Location: /browse.php');
+    header('Location: ' . app_url('/browse.php'));
     exit;
 }
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
 
             set_flash('success', 'Report updated successfully!');
-            header("Location: /item-detail.php?id=$id");
+            header('Location: ' . app_url('/item-detail.php?id=' . $id));
             exit;
         }
     }
@@ -106,7 +106,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <?php endif; ?>
 
     <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-sm);">
-        <form action="/user/edit-item.php?id=<?= $id ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= e(app_url('/user/edit-item.php?id=' . $id)) ?>" method="post" enctype="multipart/form-data">
             <?= csrf_token() ?>
 
             <div class="form-group">
@@ -164,7 +164,7 @@ require_once __DIR__ . '/../../includes/header.php';
                 <label>Replace Photograph (Optional)</label>
                 <?php if ($item['image_path']): ?>
                     <div style="margin-bottom: 8px;">
-                        <img src="/<?= e($item['image_path']) ?>" alt="Current image" style="height: 90px; border-radius: 6px;">
+                    <img src="<?= e(app_url('/' . $item['image_path'])) ?>" alt="Current image" style="height: 90px; border-radius: 6px;">
                     </div>
                 <?php endif; ?>
                 <div class="file-upload-area">
@@ -176,7 +176,7 @@ require_once __DIR__ . '/../../includes/header.php';
             </div>
 
             <div style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
-                <a href="/user/my-reports.php" class="btn btn-outline">Cancel</a>
+                <a href="<?= e(app_url('/user/my-reports.php')) ?>" class="btn btn-outline">Cancel</a>
                 <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
             </div>
         </form>

@@ -1,6 +1,7 @@
 <?php
 /** SMTP email delivery through PHPMailer. */
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/functions.php';
 
 function send_email(string $recipient, string $name, string $subject, string $htmlBody, string $textBody): bool {
     $autoload = __DIR__ . '/../vendor/autoload.php';
@@ -55,9 +56,10 @@ function send_email(string $recipient, string $name, string $subject, string $ht
 function email_user(string $recipient, string $name, string $subject, string $heading, string $message): bool {
     $safeHeading = htmlspecialchars($heading, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
+    $siteUrl = rtrim(env_value('APP_BASE_URL', 'http://localhost:8000'), '/') . app_url('/');
     $html = '<!doctype html><html><body style="font-family:Arial,sans-serif;color:#172033;line-height:1.6">'
         . '<h1 style="font-size:22px">' . $safeHeading . '</h1><p>' . $safeMessage . '</p>'
-        . '<p><a href="' . htmlspecialchars(env_value('APP_BASE_URL', 'http://localhost:8000'), ENT_QUOTES, 'UTF-8') . '">Open LostAndFound</a></p>'
+        . '<p><a href="' . htmlspecialchars($siteUrl, ENT_QUOTES, 'UTF-8') . '">Open LostAndFound</a></p>'
         . '</body></html>';
     return send_email($recipient, $name, $subject, $html, $heading . "\n\n" . $message);
 }
