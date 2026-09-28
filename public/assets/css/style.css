@@ -622,7 +622,7 @@ hr { border: none; border-top: 1px solid var(--slate-200); margin: .5rem 0; }
 .user-reports-tabs a.active { color: var(--primary); border-bottom-color: var(--primary); }
 .logout-form { margin: 0; }
 .logout-link {
-    width: 100%; padding: 8px 0; border: 0; background: transparent;
+    width: 100%; padding: 8px 16px; border: 0; background: transparent;
     color: var(--slate-700); font: inherit; text-align: left; cursor: pointer;
 }
 .logout-link:hover { color: var(--primary); }
