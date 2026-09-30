@@ -27,8 +27,8 @@
                 <ul>
                     <li><a href="<?= e(app_url('/user/my-reports.php')) ?>">My reports</a></li>
                     <li><a href="<?= e(app_url('/user/my-reports.php?tab=claims')) ?>">My claims</a></li>
-                    <li><a href="<?= e(app_url('/auth/login.php')) ?>">Sign in</a></li>
-                    <li><a href="<?= e(app_url('/auth/register.php')) ?>">Create account</a></li>
+                    <li><a href="<?= e(app_url('/login.php')) ?>">Sign in</a></li>
+                    <li><a href="<?= e(app_url('/register.php')) ?>">Create account</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -36,8 +36,8 @@
                 <ul>
                     <li><a href="<?= e(app_url('/')) ?>">Home</a></li>
                     <li><a href="<?= e(app_url('/browse.php')) ?>">Browse reports</a></li>
-                    <li><a href="<?= e(app_url('/auth/register.php')) ?>">Join CivicFind</a></li>
-                    <li><a href="<?= e(app_url('/auth/login.php')) ?>">Your account</a></li>
+                    <li><a href="<?= e(app_url('/register.php')) ?>">Join CivicFind</a></li>
+                    <li><a href="<?= e(app_url('/login.php')) ?>">Your account</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -55,7 +55,7 @@
             <div class="footer-social">
                 <a href="<?= e(app_url('/')) ?>" aria-label="Home">Home</a>
                 <a href="<?= e(app_url('/browse.php')) ?>" aria-label="Browse reports">Browse</a>
-                <a href="<?= e(app_url('/auth/login.php')) ?>" aria-label="Sign in">Sign in</a>
+                <a href="<?= e(app_url('/login.php')) ?>" aria-label="Sign in">Sign in</a>
             </div>
         </div>
     </div>

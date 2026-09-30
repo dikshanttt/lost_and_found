@@ -5,9 +5,9 @@
 $current_page = 'browse';
 $page_title   = 'Browse Items – CivicFind';
 
-require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/database/db.php';
+require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/header.php';
 
 $db = get_db();
 $categories = get_categories($db);
@@ -241,4 +241,4 @@ function qs(array $overrides = []): string {
     </div>
 </section>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

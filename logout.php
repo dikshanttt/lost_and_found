@@ -1,10 +1,10 @@
 <?php
 /**
- * CivicFind – Logout (auth/logout.php)
+ * CivicFind – Logout (logout.php)
  */
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../includes/auth_check.php';
-require_once __DIR__ . '/../../includes/functions.php';
+require_once __DIR__ . '/database/db.php';
+require_once __DIR__ . '/auth/auth.php';
+require_once __DIR__ . '/includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . app_url('/'));

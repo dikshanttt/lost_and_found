@@ -1,16 +1,94 @@
-# LostAndFound V1.5
+# CivicFind – Lost and Found Hub
 
-Page-based PHP and MySQL project. V1.5 includes account authentication, searchable item listings, responsive pages, and email notifications through PHPMailer and SMTP.
+A PHP web application for posting, searching, and claiming lost & found items.
 
-## Local setup
+## Tech Stack
 
-1. For a fresh database, import `schema.sql`. It creates the `lost_found_hub` database and tables; it drops existing app tables, so never import it over data you need. For an existing installation, keep its data and proceed to the setup script, which adds the V1.5 authentication support table and claim uniqueness rule where possible.
-2. Copy `.env.example` to `.env` and set the database connection, a unique `APP_KEY`, initial administrator email/password, and SMTP details. Use a password of at least 12 characters for the initial administrator.
-3. Install the PHP dependency with `composer install`.
-4. Run `php config/setup.php` from the project directory. The setup script is intentionally CLI-only and creates the first admin using the environment values.
-5. Remove `ADMIN_PASSWORD` from `.env` after the admin account is created. Keep `.env` private and never commit it.
-6. Set the web server document root to the project's `public/` directory. For PHP's built-in server, run `php -S 127.0.0.1:8000 -t public` from the project root. The private configuration and source folders are intentionally outside the document root. Internal links, redirects, CSS, and JavaScript URLs use a shared helper that detects when the public site is served under a subfolder. If your server uses rewritten routes that prevent detection, set `APP_BASE_PATH` in `.env` to the URL path to the public folder, such as `/LostAndFound/public`.
+- PHP 8+
+- MySQL
+- HTML, CSS, JavaScript (vanilla)
+- Composer / PHPMailer
 
-`SMTP_ENCRYPTION` accepts `tls`, `ssl`, or `none`; use the value and port supplied by your SMTP provider. `MAIL_FROM_ADDRESS` must be an address authorized by that provider. `ADMIN_NOTIFICATION_EMAIL` receives new report and claim notices. Email delivery failures are recorded in the PHP error log and do not interrupt submissions.
+## Project Structure
 
-The `public/.htaccess` files disable directory listings and prevent uploaded PHP scripts from being served on Apache. For Nginx or another server, configure equivalent upload restrictions. Keep the project root outside the public document root; only `public/` should be web accessible.
+```
+LostAndFound/
+├── index.php              Home page
+├── login.php              Sign in (demo: refreshes page)
+├── register.php           Create account (demo: refreshes page)
+├── logout.php             Sign out
+├── browse.php             Search & filter items
+├── item-detail.php        Item detail & claim page
+│
+├── config/
+│   └── config.php         Environment loader
+│
+├── database/
+│   ├── db.php             PDO database connection
+│   └── schema.sql         MySQL schema
+│
+├── auth/
+│   └── auth.php           Session & role-based access
+│
+├── admin/
+│   ├── dashboard.php      Admin overview
+│   ├── claims.php         Manage claims
+│   ├── items.php          Manage items
+│   └── users.php          Manage users
+│
+├── user/
+│   ├── my-reports.php     User's own reports
+│   ├── report-item.php    Submit a report
+│   ├── edit-item.php      Edit a report
+│   ├── delete-item.php    Delete a report
+│   └── submit-claim.php   Submit a claim
+│
+├── includes/
+│   ├── header.php         HTML head & opening tags
+│   ├── footer.php         Footer & closing tags
+│   ├── navbar.php         Navigation bar
+│   └── functions.php      Shared helpers
+│
+├── assets/
+│   ├── css/style.css
+│   ├── js/main.js
+│   └── images/
+│
+├── uploads/
+│   ├── profiles/
+│   └── documents/
+│
+├── vendor/                Composer packages
+├── .env                   Environment config
+├── .env.example           Sample env file
+├── .gitignore
+├── composer.json
+└── composer.lock
+```
+
+## Setup
+
+1. Install dependencies:
+   ```bash
+   composer install
+   ```
+
+2. Copy `.env.example` to `.env` and set your database credentials.
+
+3. Import the schema:
+   ```bash
+   mysql -u root -p lost_found_hub < database/schema.sql
+   ```
+
+4. Start the PHP development server:
+   ```bash
+   php -S localhost:8000
+   ```
+
+5. Open `http://localhost:8000` in your browser.
+
+## Notes
+
+- Login and register forms refresh the page for demonstration purposes.
+- The app reads database settings from `.env`.
+- Role validation is enforced server-side before accessing protected pages.

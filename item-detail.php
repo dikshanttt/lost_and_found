@@ -2,9 +2,9 @@
 /**
  * CivicFind – Item Details & Claim Page (item-detail.php)
  */
-require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../includes/auth_check.php';
+require_once __DIR__ . '/database/db.php';
+require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/auth/auth.php';
 
 $db = get_db();
 $id = (int)($_GET['id'] ?? 0);
@@ -54,7 +54,7 @@ $rel_stmt = $db->prepare("
 $rel_stmt->execute(['cat' => $item['category_id'], 'id' => $id]);
 $related = $rel_stmt->fetchAll();
 
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="container" style="padding: 24px 0;">
@@ -126,7 +126,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 Your claim is currently: <?= status_badge($existing_claim['status']) ?>
                             </div>
                         <?php elseif (!is_logged_in()): ?>
-                            <a href="<?= e(app_url('/auth/login.php')) ?>" class="btn btn-teal btn-lg">Sign In to Claim This Item</a>
+                            <a href="<?= e(app_url('/login.php')) ?>" class="btn btn-teal btn-lg">Sign In to Claim This Item</a>
                         <?php else: ?>
                             <button class="btn btn-teal btn-lg" data-modal="claimModal">✨ Claim This Item</button>
                         <?php endif; ?>
@@ -219,4 +219,4 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

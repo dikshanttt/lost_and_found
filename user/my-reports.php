@@ -2,9 +2,9 @@
 /**
  * CivicFind – User Portal: My Reports & Claims (user/my-reports.php)
  */
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../includes/functions.php';
-require_once __DIR__ . '/../../includes/auth_check.php';
+require_once __DIR__ . '/../database/db.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../auth/auth.php';
 
 require_login();
 
@@ -39,7 +39,7 @@ $my_claims = $claims_stmt->fetchAll();
 
 $page_title = 'My Reports & Claims – CivicFind';
 $current_page = 'my-reports';
-require_once __DIR__ . '/../../includes/header.php';
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="container" style="padding: 36px 24px;">
@@ -183,4 +183,4 @@ require_once __DIR__ . '/../../includes/header.php';
     <?php endif; ?>
 </div>
 
-<?php require_once __DIR__ . '/../../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

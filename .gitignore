@@ -1,7 +1,6 @@
 .env
-.env.*
-!.env.example
-/vendor/
-/public/assets/uploads/*
-!/public/assets/uploads/.htaccess
-!/public/assets/uploads/.gitkeep
+vendor/
+uploads/*.jpg
+uploads/*.png
+uploads/*.webp
+.htaccess

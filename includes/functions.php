@@ -107,10 +107,10 @@ function upload_item_image(array $file): string|false {
         'image/webp' => 'webp',
     };
     $name = uniqid('item_', true) . '.' . $ext;
-    $dest = __DIR__ . '/../public/assets/uploads/' . $name;
+    $dest = __DIR__ . '/../uploads/' . $name;
 
     if (!move_uploaded_file($file['tmp_name'], $dest)) return false;
-    return 'assets/uploads/' . $name;
+    return 'uploads/' . $name;
 }
 
 /* ── Badges ────────────────────────────────────────────── */
